@@ -25,17 +25,7 @@ class _TimerPageState extends State<TimerPage> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25.0)),
               ),
-              RawMaterialButton(
-                child: Icon(
-                  Icons.pause,
-                  size: 50,
-                ),
-                onPressed: () => {},
-                elevation: 10.0,
-                fillColor: Colors.red,
-                shape: CircleBorder(),
-                constraints: BoxConstraints(minWidth: 100.0, minHeight: 100.0),
-              ),
+              BigControlButton(),
             ],
           ),
           SizedBox(
@@ -43,6 +33,27 @@ class _TimerPageState extends State<TimerPage> {
           )
         ],
       ),
+    );
+  }
+}
+
+class BigControlButton extends StatelessWidget {
+  const BigControlButton({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      child: Icon(
+        Icons.pause,
+        size: 50,
+      ),
+      onPressed: () => {},
+      elevation: 10.0,
+      fillColor: Colors.red,
+      shape: CircleBorder(),
+      constraints: BoxConstraints(minWidth: 100.0, minHeight: 100.0),
     );
   }
 }
