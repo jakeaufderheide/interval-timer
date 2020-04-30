@@ -5,4 +5,9 @@ const TextStyle kHeaderText = TextStyle(
   fontWeight: FontWeight.w500,
 );
 
+const TextStyle kTimerText = TextStyle(
+  fontSize: 50.0,
+  fontWeight: FontWeight.w900,
+);
+
 const kStandardPadding = 15.0;
