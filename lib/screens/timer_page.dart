@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:interval_timer/BLoC/timer_card_bloc.dart';
 import 'package:interval_timer/constants.dart';
+import 'package:interval_timer/models/card.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 class TimerPage extends StatefulWidget {
@@ -49,7 +51,9 @@ class BigControlButton extends StatelessWidget {
         Icons.pause,
         size: 50,
       ),
-      onPressed: () => {},
+      onPressed: () => {
+        timerCardBloc.toggle(),
+      },
       elevation: 10.0,
       fillColor: Colors.red,
       shape: CircleBorder(),
@@ -68,38 +72,37 @@ class WorkoutCardContent extends StatefulWidget {
 }
 
 class _WorkoutCardContentState extends State<WorkoutCardContent> {
-  var currentSeconds = 300;
-  Timer timer;
-
-  @override
-  void initState() {
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      setState(() {
-        currentSeconds--;
-      });
-      if (currentSeconds == 0) {
-        timer.cancel();
-      }
-    });
-    super.initState();
-  }
+  TimeCard card;
 
   @override
   void dispose() {
-    timer.cancel();
+    timerCardBloc.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    timerCardBloc.toggle();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(kStandardPadding),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          TopBar(),
-          CircularTimer(currentSeconds: currentSeconds),
-        ],
+      child: StreamBuilder(
+        stream: timerCardBloc.timeCardStream,
+        initialData: TimeCard(currentTimeSeconds: 0, isActive: false),
+        builder: (context, snapshot) {
+          card = snapshot.data;
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              TopBar(),
+              CircularTimer(currentSeconds: card.currentTimeSeconds),
+            ],
+          );
+        },
       ),
     );
   }

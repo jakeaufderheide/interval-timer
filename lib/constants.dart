@@ -10,4 +10,6 @@ const TextStyle kTimerText = TextStyle(
   fontWeight: FontWeight.w900,
 );
 
+const int kInitialValueSeconds = 300;
+
 const kStandardPadding = 15.0;
